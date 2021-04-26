@@ -1,13 +1,25 @@
 package model.observer
 
+import java.util.ArrayList
 
-interface Observable{
 
-    fun subscribe(observer: Observer)
+abstract class Observable{
 
-    fun unsubscribe(observer: Observer)
+    private val subscribedObserver = ArrayList<Observer>()
 
-    fun notifyObservers()
+
+    fun subscribe(observer: Observer) {
+        subscribedObserver.add(observer)
+
+    }
+
+    fun unsubscribe(observer: Observer) {
+        if (subscribedObserver.contains(observer))
+            subscribedObserver.remove(observer)    }
+
+    fun notifyObservers() {
+        subscribedObserver.map {observer -> observer.update()}
+    }
 
 
 }
